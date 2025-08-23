@@ -1,0 +1,6 @@
+@DnuGame.Api_HostAddress = http://localhost:5215
+
+GET {{DnuGame.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
