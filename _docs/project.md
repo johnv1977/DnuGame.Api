@@ -68,7 +68,74 @@ Todos los proyectos usarán **GitHub Actions para CI/CD**.
 
 ---
 
-## 2. Cliente Web (React PWA con Tailwind) 🚧 PENDIENTE
+## 2. Dashboard Administrativo (Vue 3 + Vuetify) 🆕
+
+### Descripción
+Panel de administración corporativo para monitorear el juego, gestionar usuarios y visualizar estadísticas en tiempo real.
+
+### Requerimientos funcionales
+- **Autenticación administrativa:**
+  - Login con credenciales de administrador contra el backend .NET
+  - JWT token para autenticación con el API
+  - Logout y manejo de sesión
+- **Dashboard principal:**
+  - Métricas en tiempo real: jugadores conectados, partidas jugadas, ranking top 10
+  - Gráficos de actividad por hora/día
+  - Estadísticas de uso del juego
+- **Gestión de usuarios:**
+  - Lista de usuarios registrados con filtros y paginación
+  - Ver detalles de usuario (perfil, estadísticas, historial)
+  - Capacidad de deshabilitar/habilitar usuarios
+- **Monitor de partidas:**
+  - Ver partidas en curso en tiempo real
+  - Historial de partidas recientes
+  - Conexión a SignalR para actualizaciones live
+- **Configuración del sistema:**
+  - Ajustar puntajes del juego (Win/Draw/Lose points)
+  - Configurar timeouts y reglas
+  - Logs del sistema
+
+### Stack tecnológico
+- **Vue 3** con Composition API
+- **Vuetify 3** para componentes UI corporativos
+- **Vue Router** para navegación
+- **Pinia** para estado global
+- **Axios** para HTTP requests
+- **@microsoft/signalr** para conexión en tiempo real
+- **Chart.js/Vue-ChartJS** para gráficos
+- **Vite** como bundler
+
+### Tareas de implementación
+- [ ] Crear proyecto Vue 3 + Vuetify con Vite
+- [ ] Configurar router con guards de autenticación
+- [ ] Implementar store Pinia para auth y datos globales
+- [ ] Crear layout corporativo con sidebar y header
+- [ ] Implementar autenticación contra API .NET
+- [ ] Crear dashboard con métricas y gráficos
+- [ ] Implementar gestión de usuarios (CRUD básico)
+- [ ] Conectar a SignalR para updates en tiempo real
+- [ ] Crear monitor de partidas en vivo
+- [ ] Implementar panel de configuración
+- [ ] Agregar logging y manejo de errores
+- [ ] Configurar build para producción
+
+### Endpoints del backend requeridos
+```
+GET /admin/dashboard/metrics     → métricas generales
+GET /admin/users                 → lista usuarios con paginación
+GET /admin/users/{id}           → detalles de usuario
+PUT /admin/users/{id}/status    → habilitar/deshabilitar
+GET /admin/matches              → historial de partidas
+GET /admin/config               → configuración actual
+PUT /admin/config               → actualizar configuración
+GET /admin/logs                 → logs del sistema
+```
+
+---
+
+
+
+## 3. Cliente Web (React PWA con Tailwind) 🚧 PENDIENTE
 
 ### Requerimientos funcionales
 - PWA accesible desde navegador y móvil.
@@ -93,7 +160,7 @@ Todos los proyectos usarán **GitHub Actions para CI/CD**.
 
 ---
 
-## 3. Cliente Móvil (React Native – Ranking en vivo) 🚧 PENDIENTE
+## 4. Cliente Móvil (React Native – Ranking en vivo) 🚧 PENDIENTE
 
 ### Requerimientos funcionales
 - Conexión al Hub de SignalR con autenticación JWT.
@@ -127,9 +194,9 @@ Todos los proyectos usarán **GitHub Actions para CI/CD**.
 - **CORS:** Configurado para clientes web/móvil
 
 ### 🚧 Pendiente - Clientes y Mejoras
+- **Vue Dashboard:** Panel administrativo
 - **React PWA:** Cliente web con estética arcade
 - **React Native:** App móvil con ranking en vivo
-- **Vue Dashboard:** Panel administrativo ([Ver Fase 2](./project_fase_2.md))
 - **Backend mejoras:** Observabilidad, pruebas, documentación
 - **CI/CD:** GitHub Actions para todos los proyectos
 

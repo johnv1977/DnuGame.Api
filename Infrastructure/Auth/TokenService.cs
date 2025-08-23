@@ -23,6 +23,12 @@ public class TokenService : ITokenService
         var audience = jwtSection.GetValue<string>("Audience") ?? "DnuGameClients";
         var expiresMinutes = jwtSection.GetValue<int>("ExpiresMinutes", 60);
 
+        // Validar que la clave tenga al menos 32 caracteres (256 bits) para HS256
+        if (key.Length < 32)
+        {
+            throw new InvalidOperationException($"JWT Key must be at least 32 characters long for HS256 algorithm. Current length: {key.Length}");
+        }
+
         var claims = new List<Claim>
         {
             new(ClaimTypes.NameIdentifier, userId),

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DnuGame.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e39db32a7cc7e95aa1a79a9a7da517e8d0cd579b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0b487d063e556e8b9222cc635cca108850ef21c0")]
 [assembly: System.Reflection.AssemblyProductAttribute("DnuGame.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DnuGame.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
