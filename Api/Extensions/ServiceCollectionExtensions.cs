@@ -1,4 +1,5 @@
 using System.Text;
+using DnuGame.Api.Common.Abstractions;
 using DnuGame.Api.Infrastructure.Auth;
 using DnuGame.Api.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -70,6 +71,33 @@ public static class ServiceCollectionExtensions
         });
 
         services.AddAuthorization();
+        
+        // SignalR
+        services.AddSignalR();
+        
+        // CORS
+        services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policy =>
+            {
+                policy.WithOrigins(
+                    "http://localhost:3000", // React dev
+                    "http://localhost:5173", // Vite dev
+                    "https://localhost:3000",
+                    "https://localhost:5173"
+                )
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials();
+            });
+        });
+        
+        // Servicios de aplicación
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddSingleton<IPlayerStore, DnuGame.Api.Modules.Players.InMemoryPlayerStore>();
+        services.AddSingleton<IRankingService, DnuGame.Api.Modules.Ranking.RankingService>();
+        services.AddSingleton<IGameRpsService, DnuGame.Api.Modules.GameRps.GameRpsService>();
+        
         return services;
     }
 }

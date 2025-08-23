@@ -1,6 +1,52 @@
-@DnuGame.Api_HostAddress = http://localhost:5215
-
-GET {{DnuGame.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+@baseUrl = http://localhost:5215
 
 ###
+# Health Check - Verificar que la API está funcionando
+GET {{baseUrl}}/health
+
+###
+# Registro de usuario nuevo
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "username": "testuser"
+}
+
+###
+# Login de usuario
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+###
+# Obtener perfil de usuario (requiere token JWT)
+# Primero ejecuta el login para obtener el token y reemplaza YOUR_JWT_TOKEN
+GET {{baseUrl}}/auth/me
+Authorization: Bearer YOUR_JWT_TOKEN
+
+###
+# Obtener todos los jugadores (requiere autenticación)
+GET {{baseUrl}}/players
+Authorization: Bearer YOUR_JWT_TOKEN
+
+###
+# Obtener jugador por ID (requiere autenticación)
+GET {{baseUrl}}/players/test-user-id
+Authorization: Bearer YOUR_JWT_TOKEN
+
+###
+# Swagger UI - Documentación de la API
+GET {{baseUrl}}/swagger
+
+###
+# SignalR Hub endpoint para el juego RPS
+# Nota: Este es un WebSocket endpoint, no HTTP REST
+# URL: ws://localhost:5215/hubs/rps
+# Se conecta con SignalR client, no con HTTP requests
