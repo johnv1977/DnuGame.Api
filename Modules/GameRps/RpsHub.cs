@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace DnuGame.Api.Modules.GameRps;
 
+/// <summary>
+/// SignalR Hub for Rock-Paper-Scissors game functionality.
+/// Requires authentication for all methods.
+/// Hub URL: /hubs/rps
+/// </summary>
 [Authorize]
 public class RpsHub : Hub
 {
@@ -27,6 +32,12 @@ public class RpsHub : Hub
         _userManager = userManager;
     }
 
+    /// <summary>
+    /// Join the game hub. This method should be called first when connecting.
+    /// Registers the player and notifies all connected clients.
+    /// </summary>
+    /// <returns>Task representing the async operation</returns>
+    /// <exception cref="HubException">Thrown when user is not authenticated or not found</exception>
     public async Task Join()
     {
         var userId = Context.UserIdentifier;
@@ -56,6 +67,12 @@ public class RpsHub : Hub
         await Clients.Caller.SendAsync("RankingUpdated", ranking);
     }
 
+    /// <summary>
+    /// Submit a move for the Rock-Paper-Scissors game.
+    /// </summary>
+    /// <param name="move">The move to play. Valid values: "rock", "paper", "scissors" (case insensitive)</param>
+    /// <returns>Task representing the async operation</returns>
+    /// <exception cref="HubException">Thrown when user is not authenticated, move is invalid, or registration fails</exception>
     public async Task Play(string move)
     {
         var userId = Context.UserIdentifier;
@@ -78,6 +95,11 @@ public class RpsHub : Hub
         await Clients.Caller.SendAsync("MoveRegistered", new { move, timestamp = DateTime.UtcNow });
     }
 
+    /// <summary>
+    /// Get the current player ranking.
+    /// Sends the ranking data to the calling client.
+    /// </summary>
+    /// <returns>Task representing the async operation</returns>
     public async Task GetRanking()
     {
         var ranking = await _rankingService.GetRankingAsync();

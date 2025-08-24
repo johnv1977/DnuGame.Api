@@ -42,6 +42,9 @@ app.MapAuthEndpoints();
 // Players endpoints
 app.MapPlayersEndpoints();
 
+// Game RPS endpoints
+app.MapGameRpsEndpoints();
+
 // SignalR Hub
 app.MapHub<RpsHub>("/hubs/rps");
 

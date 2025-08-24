@@ -15,16 +15,22 @@ public static class AuthModule
 
         group.MapPost("/register", RegisterAsync)
             .WithName("Register")
-            .WithOpenApi();
+            .WithOpenApi()
+            .Produces(StatusCodes.Status200OK)
+            .Produces<ErrorResponse>(StatusCodes.Status400BadRequest);
 
         group.MapPost("/login", LoginAsync)
             .WithName("Login")
-            .WithOpenApi();
+            .WithOpenApi()
+            .Produces<AuthTokenResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status401Unauthorized);
 
         group.MapGet("/me", GetMeAsync)
             .RequireAuthorization()
             .WithName("GetMe")
-            .WithOpenApi();
+            .WithOpenApi()
+            .Produces<MeResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status401Unauthorized);
 
         return app;
     }
