@@ -4,6 +4,7 @@ using DnuGame.Api.Modules.Rooms.Exceptions;
 using DnuGame.Api.Modules.Rooms.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using FluentValidation;
 
 namespace DnuGame.Api.Modules.Rooms;
 
@@ -121,10 +122,24 @@ public static class RoomsModule
 
     private static async Task<IResult> CreateRoomAsync(
         [FromBody] CreateRoomDto request,
-        IRoomService roomService)
+        IRoomService roomService,
+        IValidator<CreateRoomDto> validator)
     {
         try
         {
+            // Validar con FluentValidation
+            var validationResult = await validator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors.Select(e => e.ErrorMessage);
+                return Results.BadRequest(new ErrorResponse(
+                    "validation_failed",
+                    "Validation Failed",
+                    string.Join("; ", errors),
+                    400
+                ));
+            }
+
             var room = await roomService.CreateRoomAsync(request);
             return Results.Created($"/api/rooms/{room.Slug}", room);
         }
@@ -151,10 +166,24 @@ public static class RoomsModule
     private static async Task<IResult> UpdateRoomAsync(
         string slug,
         [FromBody] UpdateRoomDto request,
-        IRoomService roomService)
+        IRoomService roomService,
+        IValidator<UpdateRoomDto> validator)
     {
         try
         {
+            // Validar con FluentValidation
+            var validationResult = await validator.ValidateAsync(request);
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors.Select(e => e.ErrorMessage);
+                return Results.BadRequest(new ErrorResponse(
+                    "validation_failed",
+                    "Validation Failed",
+                    string.Join("; ", errors),
+                    400
+                ));
+            }
+
             var room = await roomService.UpdateRoomAsync(slug, request);
             if (room == null)
             {

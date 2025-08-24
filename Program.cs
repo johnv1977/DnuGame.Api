@@ -3,12 +3,16 @@ using DnuGame.Api.Modules.Auth;
 using DnuGame.Api.Modules.Players;
 using DnuGame.Api.Modules.GameRps;
 using DnuGame.Api.Modules.Rooms;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Servicios base
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Configurar FluentValidation
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 // Configurar validación automática y JSON
 builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>

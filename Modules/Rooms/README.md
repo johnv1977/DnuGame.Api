@@ -8,7 +8,7 @@ El módulo de Salas permite a los usuarios gestionar salas de juego donde pueden
 ### ✅ Entidades
 - **Room**: Entidad principal con propiedades Id, Slug, Name, Color, Icon, UserLimit, IsOpen, CreatedAt, UpdatedAt
 
-### ✅ DTOs con Validaciones DataAnnotations
+### ✅ DTOs con Validaciones FluentValidation
 - **CreateRoomDto**: Para crear nuevas salas con validaciones automáticas
 - **UpdateRoomDto**: Para actualizar salas existentes
 - **RoomResponseDto**: Respuesta completa de sala con información de usuario actual
@@ -40,10 +40,12 @@ El módulo de Salas permite a los usuarios gestionar salas de juego donde pueden
 - **RoomCapacityExceededException**: Cuando se excede la capacidad
 
 ### ✅ Validaciones
-- **DataAnnotations**: Validación automática en DTOs
+- **FluentValidation**: Validación avanzada con validadores dedicados
+- **Validación asíncrona de Slug único**: Verifica unicidad en base de datos
 - **Slug único**: Validado a nivel de base de datos y servicio
 - **Formato hex de color**: Validado con regex
 - **Límites de usuarios**: Entre 2 y 50
+- **Mensajes de error personalizados**: Respuestas claras y específicas
 
 ### ✅ Autorización
 - **AdminOnly**: Política para operaciones administrativas
@@ -63,6 +65,9 @@ Modules/Rooms/
 ├── Repositories/
 │   ├── IRoomRepository.cs
 │   └── RoomRepository.cs
+├── Validators/
+│   ├── CreateRoomDtoValidator.cs
+│   └── UpdateRoomDtoValidator.cs
 ├── Exceptions/
 │   └── RoomExceptions.cs
 ├── Configuration/
@@ -140,7 +145,8 @@ Authorization: Bearer {token}
 
 - **Paginación**: Implementada en el listado de salas
 - **Índices de Base de Datos**: Slug único, IsOpen para filtrado
-- **Validación Automática**: DataAnnotations integrada con minimal APIs
+- **FluentValidation**: Validación avanzada con validadores personalizados
+- **Validación Asíncrona**: Verificación de unicidad de slug en tiempo real
 - **Manejo de Errores**: Excepciones personalizadas con respuestas HTTP apropiadas
 - **Documentación Swagger**: Tipos de request/response explícitos
 
@@ -151,3 +157,12 @@ Authorization: Bearer {token}
 - [ ] Implementar soft delete en lugar de eliminación física
 - [ ] Agregar cacheo para consultas frecuentes
 - [ ] Implementar audit trail para cambios en salas
+
+## Historial de Refactorizaciones
+
+### ✅ Refactorización FluentValidation (Agosto 2025)
+- **Migración de DataAnnotations a FluentValidation**: Se refactorizó el sistema de validaciones para usar FluentValidation en lugar de DataAnnotations
+- **Validadores Dedicados**: Se crearon `CreateRoomDtoValidator` y `UpdateRoomDtoValidator` con validaciones específicas
+- **Validación Asíncrona**: Implementada verificación asíncrona de unicidad de slug
+- **Mensajes de Error Mejorados**: Personalización completa de mensajes de validación
+- **Integración con Minimal APIs**: Configuración completa del sistema de validación en endpoints
