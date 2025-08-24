@@ -33,17 +33,8 @@ public static class AuthModule
         [FromBody] AuthRegisterRequest request,
         UserManager<ApplicationUser> userManager)
     {
-        if (string.IsNullOrWhiteSpace(request.Username) || 
-            string.IsNullOrWhiteSpace(request.Email) || 
-            string.IsNullOrWhiteSpace(request.Password))
-        {
-            return Results.BadRequest(new ErrorResponse(
-                "validation_error", 
-                "Validation Error", 
-                "Username, Email and Password are required", 
-                400));
-        }
-
+        // La validación se hace automáticamente por DataAnnotations
+        
         var user = new ApplicationUser
         {
             UserName = request.Username,
@@ -72,16 +63,8 @@ public static class AuthModule
         SignInManager<ApplicationUser> signInManager,
         ITokenService tokenService)
     {
-        if (string.IsNullOrWhiteSpace(request.UsernameOrEmail) || 
-            string.IsNullOrWhiteSpace(request.Password))
-        {
-            return Results.BadRequest(new ErrorResponse(
-                "validation_error",
-                "Validation Error", 
-                "Username/Email and Password are required",
-                400));
-        }
-
+        // La validación se hace automáticamente por DataAnnotations
+        
         var user = await userManager.FindByNameAsync(request.UsernameOrEmail) ??
                    await userManager.FindByEmailAsync(request.UsernameOrEmail);
 

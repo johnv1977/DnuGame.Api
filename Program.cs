@@ -8,6 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Servicios base
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Configurar validación automática y JSON
+builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options =>
+{
+    options.SerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+});
+
 builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
