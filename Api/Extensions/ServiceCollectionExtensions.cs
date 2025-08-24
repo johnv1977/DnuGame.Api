@@ -70,7 +70,14 @@ public static class ServiceCollectionExtensions
             };
         });
 
-        services.AddAuthorization();
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AdminOnly", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireRole("Admin");
+            });
+        });
         
         // SignalR
         services.AddSignalR();
@@ -97,6 +104,10 @@ public static class ServiceCollectionExtensions
         services.AddSingleton<IPlayerStore, DnuGame.Api.Modules.Players.InMemoryPlayerStore>();
         services.AddSingleton<IRankingService, DnuGame.Api.Modules.Ranking.RankingService>();
         services.AddSingleton<IGameRpsService, DnuGame.Api.Modules.GameRps.GameRpsService>();
+        
+        // Servicios del módulo Rooms
+        services.AddScoped<DnuGame.Api.Modules.Rooms.Repositories.IRoomRepository, DnuGame.Api.Modules.Rooms.Repositories.RoomRepository>();
+        services.AddScoped<DnuGame.Api.Modules.Rooms.Services.IRoomService, DnuGame.Api.Modules.Rooms.Services.RoomService>();
         
         return services;
     }

@@ -2,6 +2,7 @@ using DnuGame.Api.Api.Extensions;
 using DnuGame.Api.Modules.Auth;
 using DnuGame.Api.Modules.Players;
 using DnuGame.Api.Modules.GameRps;
+using DnuGame.Api.Modules.Rooms;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +45,9 @@ app.MapPlayersEndpoints();
 
 // Game RPS endpoints
 app.MapGameRpsEndpoints();
+
+// Rooms endpoints
+app.MapRoomsEndpoints();
 
 // SignalR Hub
 app.MapHub<RpsHub>("/hubs/rps");
