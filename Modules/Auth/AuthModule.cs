@@ -90,7 +90,7 @@ public static class AuthModule
         var token = await tokenService.CreateTokenAsync(user.Id, user.UserName!, user.DisplayName);
         var expiresAt = DateTime.UtcNow.AddMinutes(60); // TODO: from config
 
-        return Results.Ok(new AuthTokenResponse(token, expiresAt));
+        return Results.Ok(new AuthTokenResponse(token, expiresAt, user));
     }
 
     private static async Task<IResult> GetMeAsync(

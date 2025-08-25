@@ -1,6 +1,5 @@
 using DnuGame.Api.Common.Abstractions;
-using DnuGame.Api.Common.DTO;
-using DnuGame.Api.Infrastructure.Auth;
+using DnuGame.Api.Modules.Auth.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;

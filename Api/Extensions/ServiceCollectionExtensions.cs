@@ -2,6 +2,7 @@ using System.Text;
 using DnuGame.Api.Common.Abstractions;
 using DnuGame.Api.Infrastructure.Auth;
 using DnuGame.Api.Infrastructure.Persistence;
+using DnuGame.Api.Modules.Auth.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

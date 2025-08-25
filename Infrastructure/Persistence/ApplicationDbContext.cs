@@ -1,4 +1,4 @@
-using DnuGame.Api.Infrastructure.Auth;
+using DnuGame.Api.Modules.Auth.Models;
 using DnuGame.Api.Modules.Rooms.Configuration;
 using DnuGame.Api.Modules.Rooms.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

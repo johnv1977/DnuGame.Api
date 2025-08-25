@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using DnuGame.Api.Modules.Auth.Models;
 
 namespace DnuGame.Api.Modules.Auth.DTOs;
 
@@ -29,6 +30,6 @@ public class AuthLoginRequest
     public string Password { get; set; } = string.Empty;
 }
 
-public record AuthTokenResponse(string AccessToken, DateTime ExpiresAt);
+public record AuthTokenResponse(string AccessToken, DateTime ExpiresAt, ApplicationUser User);
 
 public record MeResponse(string Id, string Username, string? Email, string? DisplayName);
