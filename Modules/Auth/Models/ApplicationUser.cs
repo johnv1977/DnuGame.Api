@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 
-namespace DnuGame.Api.Infrastructure.Auth;
+namespace DnuGame.Api.Modules.Auth.Models;
 
 public class ApplicationUser : IdentityUser
 {

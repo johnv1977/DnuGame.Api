@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace DnuGame.Api.Common.DTO;
+namespace DnuGame.Api.Modules.Auth.DTOs;
 
 public class AuthRegisterRequest
 {
@@ -32,5 +32,3 @@ public class AuthLoginRequest
 public record AuthTokenResponse(string AccessToken, DateTime ExpiresAt);
 
 public record MeResponse(string Id, string Username, string? Email, string? DisplayName);
-
-public record ErrorResponse(string Type, string Title, string Detail, int Status);
