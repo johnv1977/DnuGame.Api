@@ -9,22 +9,24 @@ public class InMemoryPlayerStore : IPlayerStore
 {
     private readonly ConcurrentDictionary<string, PlayerState> _players = new();
 
-    public async Task<IEnumerable<PlayerResponse>> GetAllPlayersAsync()
+    public Task<IEnumerable<PlayerResponse>> GetAllPlayersAsync()
     {
         var players = _players.Values.ToList();
-        return players.Select(p => new PlayerResponse(p.Id, p.Name, p.Score, p.IsOnline, p.LastSeen));
+        var result = players.Select(p => new PlayerResponse(p.Id, p.Name, p.Score, p.IsOnline, p.LastSeen));
+        return Task.FromResult<IEnumerable<PlayerResponse>>(result);
     }
 
-    public async Task<PlayerResponse?> GetPlayerAsync(string playerId)
+    public Task<PlayerResponse?> GetPlayerAsync(string playerId)
     {
         if (_players.TryGetValue(playerId, out var player))
         {
-            return new PlayerResponse(player.Id, player.Name, player.Score, player.IsOnline, player.LastSeen);
+            var result = new PlayerResponse(player.Id, player.Name, player.Score, player.IsOnline, player.LastSeen);
+            return Task.FromResult<PlayerResponse?>(result);
         }
-        return null;
+        return Task.FromResult<PlayerResponse?>(null);
     }
 
-    public async Task UpdatePlayerOnlineStatusAsync(string playerId, bool isOnline, string? connectionId = null)
+    public Task UpdatePlayerOnlineStatusAsync(string playerId, bool isOnline, string? connectionId = null)
     {
         _players.AddOrUpdate(playerId, 
             key => new PlayerState 
@@ -42,9 +44,10 @@ public class InMemoryPlayerStore : IPlayerStore
                 existing.ConnectionId = connectionId;
                 return existing;
             });
+        return Task.CompletedTask;
     }
 
-    public async Task UpdatePlayerScoreAsync(string playerId, int deltaScore)
+    public Task UpdatePlayerScoreAsync(string playerId, int deltaScore)
     {
         _players.AddOrUpdate(playerId,
             key => new PlayerState 
@@ -60,9 +63,10 @@ public class InMemoryPlayerStore : IPlayerStore
                 existing.LastSeen = DateTime.UtcNow;
                 return existing;
             });
+        return Task.CompletedTask;
     }
 
-    public async Task EnsurePlayerExistsAsync(string playerId, string name)
+    public Task EnsurePlayerExistsAsync(string playerId, string name)
     {
         _players.AddOrUpdate(playerId,
             key => new PlayerState 
@@ -81,5 +85,6 @@ public class InMemoryPlayerStore : IPlayerStore
                 }
                 return existing;
             });
+        return Task.CompletedTask;
     }
 }

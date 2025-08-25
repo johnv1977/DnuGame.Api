@@ -95,10 +95,10 @@ public class RoomRepository : IRoomRepository
         return await query.CountAsync();
     }
 
-    public async Task<int> GetCurrentUserCountAsync(Guid roomId)
+    public Task<int> GetCurrentUserCountAsync(Guid roomId)
     {
         // TODO: Implementar cuando tengamos el módulo de usuarios en salas
         // Por ahora retornamos 0
-        return 0;
+        return Task.FromResult(0);
     }
 }
