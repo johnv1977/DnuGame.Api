@@ -79,19 +79,21 @@ public static class ServiceCollectionExtensions
                 policy.RequireRole("Admin");
             });
         });
-        
+
         // SignalR
         services.AddSignalR();
-        
+
         // CORS
         services.AddCors(options =>
         {
             options.AddDefaultPolicy(policy =>
             {
                 policy.WithOrigins(
+                    "http://localhost:3001", // React dev
                     "http://localhost:3000", // React dev
                     "http://localhost:5173", // Vite dev
                     "https://localhost:3000",
+                    "https://localhost:3001",
                     "https://localhost:5173"
                 )
                 .AllowAnyMethod()
@@ -99,17 +101,17 @@ public static class ServiceCollectionExtensions
                 .AllowCredentials();
             });
         });
-        
+
         // Servicios de aplicación
         services.AddScoped<ITokenService, TokenService>();
         services.AddSingleton<IPlayerStore, DnuGame.Api.Modules.Players.InMemoryPlayerStore>();
         services.AddSingleton<IRankingService, DnuGame.Api.Modules.Ranking.RankingService>();
         services.AddSingleton<IGameRpsService, DnuGame.Api.Modules.GameRps.GameRpsService>();
-        
+
         // Servicios del módulo Rooms
         services.AddScoped<DnuGame.Api.Modules.Rooms.Repositories.IRoomRepository, DnuGame.Api.Modules.Rooms.Repositories.RoomRepository>();
         services.AddScoped<DnuGame.Api.Modules.Rooms.Services.IRoomService, DnuGame.Api.Modules.Rooms.Services.RoomService>();
-        
+
         return services;
     }
 }
